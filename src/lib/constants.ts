@@ -1,23 +1,88 @@
-// 60% Deep Regal Purple — dark immersive backgrounds, identity anchors
-export const PURPLE = "#3E1878";
-// 30% Vibrant Blue — buttons, active states, icon fills, accents
-export const BLUE = "#1A6FDD";
-// 10% Classic Navy — headings text, borders, secondary icons
-export const NAVY = "#0D1E4A";
+// Brand palette — White Navbar design system
+export const NAVY = "#2C3E6B"; // Primary Brand Dark — headings, scrolled nav
+export const PLUM = "#7D226A"; // Secondary Brand — CTAs
+export const SKY = "#1BB2E9"; // Accent Brand Sky Blue
+export const WHITE = "#FFFFFF";
 
+/** Aliases used across existing sections */
+export const PURPLE = PLUM;
+export const BLUE = SKY;
+
+const CLOUD_NAME = "tq1tf1wo";
+
+/**
+ * Optional helper — build a Cloudinary delivery URL from a public ID.
+ * Example: cldUrl("_MG_5392_ml8odr", 1440, 960)
+ */
+export function cldUrl(
+  publicId: string,
+  width: number,
+  height: number,
+  extras = "",
+) {
+  const base = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  const transforms = extras ? `${base},${extras}` : base;
+  return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${transforms}/${publicId}`;
+}
+
+/**
+ * Paste your full Cloudinary delivery URL into each value below
+ * (or use cldUrl("your-public-id", w, h) instead).
+ *
+ * Recommended URL shape:
+ * https://res.cloudinary.com/tq1tf1wo/image/upload/w_W,h_H,c_fill,q_auto,f_auto/PUBLIC_ID
+ *
+ * Size guide (W×H):
+ * - hero*:        1440×960
+ * - founding:     900×680
+ * - program cards / gallery thumbs: 600×440
+ * - admin portraits: 420×520
+ *
+ * Note: heroHome is unused on the homepage (HeroSlideshow uses HERO_SLIDES).
+ * Keep it only if you still need a single static home hero elsewhere.
+ */
 export const IMGS = {
-  heroHome: "https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=1440&h=960&fit=crop&auto=format",
-  heroAbout: "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?w=1440&h=960&fit=crop&auto=format",
-  heroPrograms: "https://images.unsplash.com/photo-1627423896085-e3e694d88e40?w=1440&h=960&fit=crop&auto=format",
-  heroContact: "https://images.unsplash.com/photo-1613897728606-6ccdee638d66?w=1440&h=960&fit=crop&auto=format",
-  founding: "https://images.unsplash.com/photo-1613896527026-f195d5c818ed?w=900&h=680&fit=crop&auto=format",
-  studentsTable: "https://images.unsplash.com/photo-1632932693914-89b90ae3d16d?w=600&h=440&fit=crop&auto=format",
-  boyStudying: "https://images.unsplash.com/photo-1620969910995-4bbe4eaa32c1?w=600&h=440&fit=crop&auto=format",
-  classroom: "https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=600&h=440&fit=crop&auto=format",
-  campusClock: "https://images.unsplash.com/photo-1728206348193-9b5ae74a7d32?w=600&h=440&fit=crop&auto=format",
-  swimming: "https://images.unsplash.com/photo-1560090995-01632a28895b?w=600&h=440&fit=crop&auto=format",
-  dining: "https://images.unsplash.com/photo-1769989016283-a233d974c1d1?w=600&h=440&fit=crop&auto=format",
-  admin1: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=420&h=520&fit=crop&auto=format",
-  admin2: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=420&h=520&fit=crop&auto=format",
-  admin3: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=420&h=520&fit=crop&auto=format",
-} as const;
+  // Heroes
+  heroHome: "", //unused by slideshow
+  heroAbout: cldUrl("schoolBlock_vc717g", 1440, 960), // About page hero
+  heroPrograms: cldUrl("_MG_3764_iog7jz", 1440, 960), // Programs/Media page hero
+  heroContact: cldUrl("schoolsignage_rgrlyk", 1440, 960), // Contact page hero
+
+  // About / campus
+  founding: cldUrl("infront_of_the_school_1_selfxs", 900, 680), // 900×680 — founding story photo
+
+  // Program cards + gallery thumbs (also used in src/lib/data.ts)
+  studentsTable: cldUrl("_MG_3764_iog7jz", 600, 440), // 600×440
+  boyStudying: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
+  classroom: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
+  campusClock: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
+  swimming: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
+  dining: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
+
+  // Director speech portrait (Home welcome teaser + About full statement)
+  directorSpeech: cldUrl("_MG_3905_ayl8no", 900, 1200, "g_face,e_sharpen:100"),
+
+  // Admin team portraits (Administrative Team cards)
+  admin1: cldUrl("PASTE_DIRECTOR_TEAM_PUBLIC_ID", 420, 520), // Nsubuga Benny Frank — team card only
+  admin2: cldUrl("freda_qtyzk8", 420, 520), // Nsubuga Freda Namakula
+  admin3: cldUrl("headteacher_hr4jpp", 420, 520), // Namutebi Rebecca
+  admin4: cldUrl("PASTE_ADMIN4_PUBLIC_ID", 420, 520), // Mukisa Samuel — Operations and Systems Admin
+};
+
+/** About page — collective faculty / staff group photo (Cloudinary public ID) */
+export const STAFF_PHOTO_PUBLIC_ID = "PASTE_STAFF_PHOTO_PUBLIC_ID";
+
+/*Home hero slideshow*/
+export const HERO_SLIDES = [
+  "_MG_5392_ml8odr",
+  "_MG_7746_naqyki",
+  "_MG_7885_hlsoen",
+] as const;
+
+/** Contact page — opens Google Maps in a new tab when the map is clicked */
+export const SCHOOL_MAPS_URL =
+  "https://www.google.com/maps/place/SHEKINAH+ELEMENTARY+SCHOOL/@0.1885647,32.4921293,17z/data=!4m6!3m5!1s0x177d9b59ed360ad5:0x393d151ce9a790ba!8m2!3d0.1885647!4d32.4921293!16s%2Fg%2F11sbpz4b8v";
+
+/** Google Maps default roadmap embed centered on the school pin */
+export const SCHOOL_MAP_EMBED_SRC =
+  "https://www.google.com/maps?q=0.1885647,32.4921293&z=17&hl=en&output=embed";

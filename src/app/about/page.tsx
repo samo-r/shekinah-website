@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { SectionHead } from "@/components/shared/SectionHead";
 import { HeroSection } from "@/components/shared/HeroSection";
 import { AdminCard } from "@/components/shared/AdminCard";
+import { StaffPhoto } from "@/components/shared/StaffPhoto";
 import { IMGS, PURPLE, BLUE } from "@/lib/constants";
 import { VALUES } from "@/lib/data";
 
@@ -11,7 +12,6 @@ export default function AboutPage() {
     <>
       <HeroSection
         img={IMGS.heroAbout}
-        tag="About Shekinah"
         title="Our Identity & Mission"
         subtitle="Nurturing diverse young minds and building firm foundational baselines through Christ-centered education, modern innovation, and godly character."
       />
@@ -19,11 +19,11 @@ export default function AboutPage() {
       {/* Founding Story */}
       <section className="bg-background py-24 px-6 lg:px-14">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          <div className="rounded-2xl overflow-hidden shadow-xl bg-muted" style={{ aspectRatio: "4/3" }}>
+          <div className="rounded-2xl overflow-hidden shadow-soft bg-muted" style={{ aspectRatio: "4/3" }}>
             <img src={IMGS.founding} alt="Shekinah School campus" className="w-full h-full object-cover" />
           </div>
           <div>
-            <SectionHead eyebrow="Our Story" title="The Story Behind Our Foundation" />
+            <SectionHead title="The Story Behind Our Foundation" />
             <p className="font-sans text-muted-foreground text-base leading-[1.85] mt-6">
               Shekinah was founded to answer a critical need: the need for a balanced, Christian-based education that focuses equally on intellectual growth and godly character. From our inception, we set out to build an inclusive environment where a diverse community could unite under Christ to achieve educational excellence. Our focus has never been just on numbers or years, but on the depth of our impact. Every milestone we reach on our campus is designed to reinforce our foundational baseline, giving young minds the wings to fly and the moral grounding to lead with integrity.
             </p>
@@ -32,10 +32,10 @@ export default function AboutPage() {
       </section>
 
       {/* Foundation Pillars 2×2 — motto card in Purple */}
-      <section className="bg-[#EDE5CC] py-24 px-6 lg:px-14">
+      <section className="bg-muted py-24 px-6 lg:px-14">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <SectionHead eyebrow="Who We Are" title="Our Foundation" center />
+            <SectionHead title="Our Foundation" center />
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             {[
@@ -46,7 +46,7 @@ export default function AboutPage() {
             ].map((p) => (
               <div
                 key={p.tag}
-                className="rounded-2xl p-8 shadow-sm"
+                className="rounded-2xl p-8 shadow-soft"
                 style={p.dark ? { backgroundColor: PURPLE } : { backgroundColor: "white" }}
               >
                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase block mb-3 text-[#1A6FDD]">
@@ -69,10 +69,10 @@ export default function AboutPage() {
       </section>
 
       {/* Full Director's Statement */}
-      <section className="bg-background py-24 px-6 lg:px-14">
+      <section id="directors-message" className="bg-background py-24 px-6 lg:px-14 scroll-mt-[96px]">
         <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-16 items-start">
           <div className="md:col-span-3">
-            <SectionHead eyebrow="From the Director" title="Welcome to Shekinah Elementary School" />
+            <SectionHead title="Welcome to Shekinah Elementary School" />
             <div className="mt-6 space-y-4 font-sans text-muted-foreground text-base leading-[1.85]">
               <p>It is our great pleasure to welcome you to our school website. At Shekinah Elementary School, we are committed to providing a holistic education that nurtures academic excellence, moral integrity, spiritual growth, and personal development. Our goal is to equip every learner with the knowledge, skills, values, and confidence needed to succeed in an ever-changing world.</p>
               <p>We believe that every child is uniquely gifted and deserves an environment where they can discover their potential and develop their talents. Through a dedicated team of teachers and staff, a supportive learning environment, and a strong partnership with parents and guardians, we strive to ensure that each learner receives quality education and individual attention.</p>
@@ -88,8 +88,8 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="md:col-span-2 md:sticky md:top-24">
-            <div className="rounded-2xl overflow-hidden shadow-xl bg-muted" style={{ aspectRatio: "3/4" }}>
-              <img src={IMGS.admin1} alt="Director Nsubuga Benny Frank" className="w-full h-full object-cover" />
+            <div className="rounded-2xl overflow-hidden shadow-soft bg-muted" style={{ aspectRatio: "3/4" }}>
+              <img src={IMGS.directorSpeech} alt="Director Nsubuga Benny Frank" className="w-full h-full object-cover" />
             </div>
             <div className="mt-4 text-center">
               <p className="font-sans font-bold text-[#0D1E4A] text-base">Nsubuga Benny Frank</p>
@@ -99,41 +99,60 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Admin Team */}
-      <section className="bg-[#EDE5CC] py-24 px-6 lg:px-14">
-        <div className="max-w-5xl mx-auto">
+      {/* Admin Team — 4 cards in one row on large screens */}
+      <section className="bg-muted py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <SectionHead eyebrow="Leadership" title="Our Administrative Team" center />
+            <SectionHead title="Our Administrative Team" center />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 justify-items-center">
             <AdminCard img={IMGS.admin1} name="Nsubuga Benny Frank" role="Director & Founder" />
             <AdminCard img={IMGS.admin2} name="Nsubuga Freda Namakula" role="Director" />
             <AdminCard img={IMGS.admin3} name="Namutebi Rebecca" role="Headteacher" />
+            <AdminCard img={IMGS.admin4} name="Mukisa Samuel" role="Operations and Systems Admin" />
           </div>
         </div>
       </section>
 
-      {/* Values in Action — Purple + Blue alternating anchors */}
+      {/* Collective staff / faculty photo */}
+      <section className="bg-background py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <SectionHead title="Our Staff" center />
+          </div>
+          <StaffPhoto />
+        </div>
+      </section>
+
+      {/* Values in Action — narrow title card + stretched description */}
       <section className="bg-background py-24 px-6 lg:px-14">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <SectionHead eyebrow="What Guides Us" title="Our Values in Action" center />
+            <SectionHead title="Our Values in Action" center />
           </div>
           <div className="space-y-8">
             {VALUES.map((v) => (
-              <div key={v.label} className="grid md:grid-cols-2 gap-6 items-stretch">
-                {/* Left anchor — Purple (dark) or Blue (vibrant) per brief */}
+              <div key={v.label} className="grid md:grid-cols-3 gap-6 items-stretch">
+                {/* Left anchor — half the previous width (1 of 3 cols) */}
                 <div
-                  className="flex items-center gap-6 rounded-2xl px-8 py-8"
+                  className="flex flex-row items-center justify-start gap-4 rounded-2xl pl-6 pr-5 py-8 md:col-span-1"
                   style={{ backgroundColor: v.dark ? PURPLE : BLUE }}
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center flex-shrink-0">
-                    <v.Icon size={28} className="text-white" />
+                  <div className="w-11 h-11 flex items-center justify-center flex-shrink-0 bg-transparent">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={v.iconSrc}
+                      alt=""
+                      aria-hidden
+                      className="w-11 h-11 object-contain brightness-0 invert"
+                    />
                   </div>
-                  <h3 className="font-sans font-extrabold text-white text-4xl tracking-tight">{v.label}</h3>
+                  <h3 className="font-sans font-extrabold text-white text-2xl md:text-3xl tracking-tight text-left">
+                    {v.label}
+                  </h3>
                 </div>
-                {/* Right description */}
-                <div className="flex items-center bg-white rounded-2xl px-8 py-8 shadow-sm">
+                {/* Right description — remaining width (2 of 3 cols) */}
+                <div className="flex items-center bg-white rounded-2xl px-8 py-8 shadow-soft md:col-span-2">
                   <p className="font-sans text-muted-foreground text-base leading-[1.85]">{v.desc}</p>
                 </div>
               </div>
@@ -149,7 +168,7 @@ export default function AboutPage() {
         </p>
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 bg-white font-bold text-sm px-8 py-4 hover:bg-[#F5EED8] transition-colors rounded-sm"
+          className="inline-flex items-center gap-2 bg-white font-bold text-sm px-8 py-4 hover:bg-background transition-colors rounded-sm"
           style={{ color: BLUE }}
         >
           Contact Us Today <ArrowRight size={16} />

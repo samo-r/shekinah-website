@@ -9,8 +9,8 @@ import { PURPLE, BLUE } from "@/lib/constants";
 const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Home", href: "/" },
   { label: "Why Us", href: "/" },
-  { label: "Our Programs", href: "/programs" },
-  { label: "Media", href: "/programs" },
+  { label: "Our Programs", href: "/" },
+  { label: "Media", href: "/media" },
   { label: "Contact Us", href: "/contact" },
 ];
 
@@ -23,12 +23,8 @@ export function Footer() {
 
           {/* Col 1: Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-5">
-              <Crest size={40} />
-              <div>
-                <p className="text-white font-bold text-[15px] leading-tight">Shekinah</p>
-                <p className="text-white/48 text-[9px] font-semibold tracking-[0.22em] uppercase">Elementary School</p>
-              </div>
+            <div className="mb-5">
+              <Crest size={87} />
             </div>
             <p className="font-sans italic text-white/58 text-sm mb-6 leading-relaxed">
               &quot;On this rock, I will build.&quot;

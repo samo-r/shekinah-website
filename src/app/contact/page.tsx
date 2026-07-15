@@ -1,26 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import {
   MapPin, Phone, Mail, Clock, ArrowRight,
 } from "lucide-react";
 import { HeroSection } from "@/components/shared/HeroSection";
 import { SectionHead } from "@/components/shared/SectionHead";
-import { IMGS, BLUE, NAVY } from "@/lib/constants";
+import { sendContactMessage } from "@/app/actions/contact";
+import { IMGS, BLUE, NAVY, SCHOOL_MAPS_URL, SCHOOL_MAP_EMBED_SRC } from "@/lib/constants";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+  const [pending, startTransition] = useTransition();
 
   const change = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const submit = (e: FormEvent) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", phone: "", message: "" });
-    setTimeout(() => setSent(false), 6000);
+    setStatus("idle");
+    setFeedback("");
+
+    const formData = new FormData(e.currentTarget);
+
+    startTransition(async () => {
+      const result = await sendContactMessage(formData);
+      if (result.ok) {
+        setStatus("success");
+        setFeedback("Thank you! We will get back to you shortly.");
+        setForm({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setStatus("error");
+        setFeedback(result.error);
+      }
+    });
   };
 
   const fieldCls =
@@ -30,7 +46,6 @@ export default function ContactPage() {
     <>
       <HeroSection
         img={IMGS.heroContact}
-        tag="Get In Touch"
         title="Contact Us"
         subtitle="Have a question, want to tour our campus, or ready to enroll? Reach out to our team today — we are here to support your family every step of the way."
       />
@@ -41,7 +56,7 @@ export default function ContactPage() {
 
           {/* Left: contact info — Blue icons */}
           <div>
-            <SectionHead eyebrow="Reach Us" title="Get in Touch" />
+            <SectionHead title="Get in Touch" />
             <div className="mt-10 space-y-7">
               {[
                 { Icon: MapPin, label: "Physical Address", value: "Mazzi Village, Sissa Ward, Kajjansi" },
@@ -68,16 +83,21 @@ export default function ContactPage() {
           </div>
 
           {/* Right: form — Blue submit button */}
-          <div className="bg-white rounded-2xl shadow-md p-8 lg:p-10">
+          <div className="bg-white rounded-2xl shadow-soft p-8 lg:p-10">
             <h3 className="font-sans font-extrabold text-[#0D1E4A] text-xl tracking-tight mb-6">
               Send Us a Message
             </h3>
-            {sent && (
+            {status !== "idle" && feedback && (
               <div
                 className="border rounded-xl p-4 mb-5 font-sans text-sm font-medium"
-                style={{ backgroundColor: `${BLUE}10`, borderColor: `${BLUE}22`, color: NAVY }}
+                style={
+                  status === "success"
+                    ? { backgroundColor: `${BLUE}10`, borderColor: `${BLUE}22`, color: NAVY }
+                    : { backgroundColor: "#FEF2F2", borderColor: "#FECACA", color: "#991B1B" }
+                }
+                role="status"
               >
-                Thank you! We will get back to you shortly.
+                {feedback}
               </div>
             )}
             <form onSubmit={submit} className="space-y-4">
@@ -98,6 +118,7 @@ export default function ContactPage() {
                     required={inp.name !== "phone"}
                     placeholder={inp.placeholder}
                     className={fieldCls}
+                    disabled={pending}
                   />
                 </div>
               ))}
@@ -113,38 +134,58 @@ export default function ContactPage() {
                   rows={4}
                   placeholder="How can we help you?"
                   className={`${fieldCls} resize-none`}
+                  disabled={pending}
                 />
               </div>
               {/* Send Message — Vibrant Blue */}
               <button
                 type="submit"
-                className="mt-1 w-full inline-flex items-center justify-center gap-2 text-white font-bold text-sm py-4 hover:opacity-90 transition-opacity rounded-sm"
+                disabled={pending}
+                className="mt-1 w-full inline-flex items-center justify-center gap-2 text-white font-bold text-sm py-4 hover:opacity-90 transition-opacity rounded-sm disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ backgroundColor: BLUE }}
               >
-                Send Message Today <ArrowRight size={16} />
+                {pending ? "Sending…" : "Send Message Today"}
+                {!pending && <ArrowRight size={16} />}
               </button>
             </form>
           </div>
         </div>
       </section>
 
-      {/* Map */}
+      {/* Map — embed is visual only; click opens Google Maps in a new tab */}
       <section style={{ height: 440 }} className="relative overflow-hidden bg-muted">
         <iframe
           title="Shekinah Elementary School — Kajjansi, Uganda"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=32.505%2C0.285%2C32.575%2C0.345&layer=mapnik"
-          className="w-full h-full border-0"
+          src={SCHOOL_MAP_EMBED_SRC}
+          className="absolute inset-0 w-full h-full border-0 pointer-events-none"
           loading="lazy"
+          tabIndex={-1}
+          aria-hidden
         />
-        <div className="absolute bottom-6 left-6 bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-3 pointer-events-none">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: BLUE }}>
-            <MapPin size={15} className="text-white" />
-          </div>
-          <div>
-            <p className="font-sans text-xs font-bold text-[#0D1E4A] leading-tight">Shekinah Elementary School</p>
-            <p className="font-sans text-[11px] text-muted-foreground">Mazzi Village, Kajjansi, Uganda</p>
-          </div>
-        </div>
+        <a
+          href={SCHOOL_MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 z-10 group"
+          aria-label="Open Shekinah Elementary School location in Google Maps"
+        >
+          <span className="absolute bottom-6 left-6 bg-white rounded-xl shadow-soft px-4 py-3 flex items-center gap-3 transition-shadow group-hover:shadow-md">
+            <span
+              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: BLUE }}
+            >
+              <MapPin size={15} className="text-white" />
+            </span>
+            <span>
+              <span className="block font-sans text-xs font-bold text-[#0D1E4A] leading-tight">
+                Shekinah Elementary School
+              </span>
+              <span className="block font-sans text-[11px] text-muted-foreground">
+                Mazzi Village, Kajjansi · Open in Google Maps
+              </span>
+            </span>
+          </span>
+        </a>
       </section>
     </>
   );

@@ -4,15 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight, ChevronLeft, ChevronRight,
-  Heart, Star, Shield, Users,
+  Heart, Star, Shield,
 } from "lucide-react";
-import { Badge } from "@/components/shared/Badge";
 import { SectionHead } from "@/components/shared/SectionHead";
 import { PrimaryBtn } from "@/components/shared/PrimaryBtn";
 import { OutlineBtn } from "@/components/shared/OutlineBtn";
-import { HeroSection } from "@/components/shared/HeroSection";
+import { HeroSlideshow } from "@/components/shared/HeroSlideshow";
 import { AdminCard } from "@/components/shared/AdminCard";
-import { IMGS, PURPLE } from "@/lib/constants";
+import { IMGS, PURPLE, HERO_SLIDES } from "@/lib/constants";
 import { PROGRAMS } from "@/lib/data";
 
 export default function HomePage() {
@@ -21,10 +20,9 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ① Hero */}
-      <HeroSection
-        img={IMGS.heroHome}
-        tag="Shekinah Elementary School"
+      {/* ① Hero slideshow */}
+      <HeroSlideshow
+        images={HERO_SLIDES}
         title="Nurturing Young God-Fearing Minds, Inspiring Excellence."
         subtitle="Welcome to Shekinah Elementary School, where every child is valued, inspired, and empowered to reach their full potential in a safe, loving, and innovative environment."
       >
@@ -36,12 +34,11 @@ export default function HomePage() {
             Learn More
           </OutlineBtn>
         </div>
-      </HeroSection>
+      </HeroSlideshow>
 
       {/* ② About Summary */}
       <section className="bg-background py-24 px-6 lg:px-14">
         <div className="max-w-3xl mx-auto text-center">
-          <Badge>Our Foundation</Badge>
           <h2 className="font-sans font-extrabold text-[#0D1E4A] text-3xl md:text-4xl leading-tight tracking-tight mb-6">
             Built on a Firm Foundation
           </h2>
@@ -52,10 +49,10 @@ export default function HomePage() {
       </section>
 
       {/* ③ Why Us — Blue icons, numbered cards */}
-      <section className="bg-[#EDE5CC] py-24 px-6 lg:px-14" id="why-us">
+      <section className="bg-muted py-24 px-6 lg:px-14" id="why-us">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 max-w-xl">
-            <SectionHead eyebrow="Why Choose Us" title="Why Choose Shekinah?" />
+            <SectionHead title="Why Choose Shekinah?" />
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -66,10 +63,10 @@ export default function HomePage() {
               { Icon: Shield, n: "03", title: "Future-Ready Innovation",
                 body: "We foster practical, hands-on growth through foundational computer lab training alongside vibrant music, arts, and co-curricular programs that uncover each child's God-given talents." },
             ].map((c) => (
-              <div key={c.n} className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
+              <div key={c.n} className="bg-white rounded-2xl p-8 shadow-soft hover:shadow-soft-lg hover:-translate-y-0.5 transition-all duration-300 group">
                 <div className="flex items-start justify-between mb-6">
                   {/* Icon — Vibrant Blue */}
-                  <div className="w-11 h-11 rounded-xl bg-[#1A6FDD] flex items-center justify-center group-hover:bg-[#3E1878] transition-colors duration-300">
+                  <div className="w-11 h-11 rounded-xl bg-[#1A6FDD] flex items-center justify-center group-hover:bg-[#78008B] transition-colors duration-300">
                     <c.Icon size={20} className="text-white" />
                   </div>
                   <span className="font-bold text-[#0D1E4A]/10 text-4xl leading-none select-none">{c.n}</span>
@@ -86,7 +83,7 @@ export default function HomePage() {
       <section className="bg-background py-24 px-6 lg:px-14">
         <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-14 items-center">
           <div className="md:col-span-3">
-            <SectionHead eyebrow="A Word From Leadership" title="Welcome to Shekinah Elementary School" />
+            <SectionHead title="Welcome to Shekinah Elementary School" />
             <p className="font-sans text-muted-foreground text-base leading-[1.85] mt-6 mb-4">
               It is our great pleasure to welcome you to our school website. At Shekinah Elementary School, we are committed to providing a holistic education that nurtures academic excellence, moral integrity, spiritual growth, and personal development. Our goal is to equip every learner with the knowledge, skills, values, and confidence needed to succeed in an ever-changing world.
             </p>
@@ -95,15 +92,15 @@ export default function HomePage() {
             </p>
             {/* Text link — Vibrant Blue */}
             <Link
-              href="/about"
+              href="/about#directors-message"
               className="inline-flex items-center gap-2 text-[#1A6FDD] font-bold text-sm hover:gap-3 transition-all duration-200"
             >
               Read Full Message <ArrowRight size={15} />
             </Link>
           </div>
           <div className="md:col-span-2 relative order-first md:order-last">
-            <div className="rounded-2xl overflow-hidden shadow-xl bg-muted" style={{ aspectRatio: "3/4" }}>
-              <img src={IMGS.admin1} alt="School Director" className="w-full h-full object-cover" />
+            <div className="rounded-2xl overflow-hidden shadow-soft bg-muted" style={{ aspectRatio: "3/4" }}>
+              <img src={IMGS.directorSpeech} alt="School Director" className="w-full h-full object-cover" />
             </div>
             {/* Quote chip — Deep Regal Purple */}
             <div
@@ -118,42 +115,47 @@ export default function HomePage() {
       </section>
 
       {/* ⑤ Administrative Team */}
-      <section className="bg-[#EDE5CC] py-24 px-6 lg:px-14">
-        <div className="max-w-5xl mx-auto">
+      <section className="bg-muted py-24 px-6 lg:px-14">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <SectionHead eyebrow="Leadership" title="Our Administrative Team" center />
+            <SectionHead title="Our Administrative Team" center />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 justify-items-center">
             <AdminCard img={IMGS.admin1} name="Nsubuga Benny Frank" role="Director & Founder" />
             <AdminCard img={IMGS.admin2} name="Nsubuga Freda Namakula" role="Director" />
             <AdminCard img={IMGS.admin3} name="Namutebi Rebecca" role="Headteacher" />
+            <AdminCard img={IMGS.admin4} name="Mukisa Samuel" role="Operations and Systems Admin" />
           </div>
         </div>
       </section>
 
       {/* ⑥ Core Values — Deep Regal Purple background */}
-      <section className="py-24 px-6 lg:px-14" style={{ backgroundColor: PURPLE }}>
+      <section className="py-14 md:py-16 px-6 lg:px-14" style={{ backgroundColor: PURPLE }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <Badge light>What We Stand For</Badge>
             <h2 className="font-sans font-extrabold text-white text-3xl md:text-4xl leading-tight tracking-tight">
               Our Core Values
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: "Faith", Icon: Heart },
-              { label: "Excellence", Icon: Star },
-              { label: "Integrity", Icon: Shield },
-              { label: "Unity", Icon: Users },
-            ].map(({ label, Icon }) => (
+              { label: "Faith", src: "/cross.svg" },
+              { label: "Excellence", src: "/award-ribbon-star-1.svg" },
+              { label: "Integrity", src: "/shield.svg" },
+              { label: "Unity", src: "/multiple-users-1.svg" },
+            ].map(({ label, src }) => (
               <div
                 key={label}
-                className="flex flex-col items-center text-center py-10 px-5 rounded-2xl border border-white/10 hover:border-[#1A6FDD]/60 hover:bg-white/5 transition-all duration-300 group cursor-default"
+                className="flex flex-col items-center text-center py-10 px-5 rounded-2xl border border-white/10 hover:border-[#1BB2E9]/60 hover:bg-white/5 transition-all duration-300 group cursor-default"
               >
-                {/* Blue icon on purple */}
-                <div className="w-14 h-14 rounded-2xl bg-[#1A6FDD]/20 flex items-center justify-center mb-5 group-hover:bg-[#1A6FDD]/40 transition-colors duration-300">
-                  <Icon size={26} className="text-[#1A6FDD]" />
+                <div className="w-20 h-20 flex items-center justify-center mb-5 bg-transparent">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt=""
+                    aria-hidden
+                    className="w-11 h-11 object-contain brightness-0 invert"
+                  />
                 </div>
                 <p className="font-sans font-extrabold text-white text-xl tracking-tight">{label}</p>
               </div>
@@ -162,17 +164,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ⑦ Programs Carousel */}
+      {/* ⑦ School Services */}
       <section className="bg-background py-24 px-6 lg:px-14">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <SectionHead eyebrow="What We Offer" title="Our Programs" />
-            <Link
-              href="/programs"
-              className="inline-flex items-center gap-2 text-[#1A6FDD] font-bold text-sm hover:gap-3 transition-all duration-200 flex-shrink-0"
-            >
-              View All Programs <ArrowRight size={15} />
-            </Link>
+          <div className="mb-14">
+            <h2 className="font-sans font-extrabold text-[#2C3E6B] text-3xl md:text-4xl leading-tight tracking-tight">
+              School Services
+            </h2>
+            <div className="mt-4 h-1 w-12 rounded-full bg-[#7D226A]" aria-hidden />
           </div>
 
           {/* Desktop 4-up carousel */}
@@ -187,7 +186,7 @@ export default function HomePage() {
               >
                 {PROGRAMS.map((p) => (
                   <div key={p.id} style={{ width: `${100 / PROGRAMS.length}%` }} className="flex-shrink-0 px-2.5">
-                    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
+                    <div className="bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-soft-lg transition-shadow duration-300 h-full flex flex-col">
                       <div className="h-44 bg-muted overflow-hidden flex-shrink-0">
                         <img src={p.img} alt={p.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                       </div>
@@ -208,7 +207,7 @@ export default function HomePage() {
             <button
               onClick={() => setSlide(Math.max(0, slide - 1))}
               disabled={slide === 0}
-              className="absolute -left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center text-[#0D1E4A] hover:bg-[#3E1878] hover:text-white transition-colors disabled:opacity-20 disabled:pointer-events-none"
+              className="absolute -left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-soft flex items-center justify-center text-[#0D1E4A] hover:bg-[#78008B] hover:text-white transition-colors disabled:opacity-20 disabled:pointer-events-none"
               aria-label="Previous"
             >
               <ChevronLeft size={20} />
@@ -216,7 +215,7 @@ export default function HomePage() {
             <button
               onClick={() => setSlide(Math.min(maxSlide, slide + 1))}
               disabled={slide === maxSlide}
-              className="absolute -right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center text-[#0D1E4A] hover:bg-[#3E1878] hover:text-white transition-colors disabled:opacity-20 disabled:pointer-events-none"
+              className="absolute -right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-soft flex items-center justify-center text-[#0D1E4A] hover:bg-[#78008B] hover:text-white transition-colors disabled:opacity-20 disabled:pointer-events-none"
               aria-label="Next"
             >
               <ChevronRight size={20} />
@@ -246,7 +245,7 @@ export default function HomePage() {
           >
             {PROGRAMS.map((p) => (
               <div key={p.id} className="min-w-[78vw] snap-start flex-shrink-0">
-                <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-soft">
                   <div className="h-40 bg-muted overflow-hidden">
                     <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
                   </div>
@@ -269,7 +268,6 @@ export default function HomePage() {
           <div className="w-[220px] h-[220px] rounded-full border border-[#1A6FDD]/15 absolute" />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto">
-          <Badge light>Admissions Open</Badge>
           <h2 className="font-sans font-extrabold text-white text-3xl md:text-4xl leading-tight tracking-tight mb-5">
             Build Their Future on a Firm Foundation.
           </h2>

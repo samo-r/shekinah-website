@@ -6,17 +6,17 @@
 
 :root {
   --font-size: 16px;
-  --background: #F5EED8;
+  --background: #E6F4FF;
   --foreground: #0D1E4A;
   --card: #ffffff;
   --card-foreground: #0D1E4A;
   --popover: #ffffff;
   --popover-foreground: #0D1E4A;
-  --primary: #3E1878;
+  --primary: #78008B;
   --primary-foreground: #ffffff;
   --secondary: #1A6FDD;
   --secondary-foreground: #ffffff;
-  --muted: #EDE5CC;
+  --muted: #D6EEFF;
   --muted-foreground: #6B7585;
   --accent: #1A6FDD;
   --accent-foreground: #ffffff;
@@ -24,7 +24,7 @@
   --destructive-foreground: #ffffff;
   --border: rgba(13, 30, 74, 0.12);
   --input: transparent;
-  --input-background: #F0E9D5;
+  --input-background: #F0F8FF;
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
@@ -45,9 +45,15 @@
   --sidebar-ring: #8B1F35;
 
   /* Brand palette (referenced directly as arbitrary values in components too) */
-  --color-brand-purple: #3E1878;
+  --color-brand-purple: #78008B;
   --color-brand-blue: #1A6FDD;
   --color-brand-navy: #0D1E4A;
+
+  /* Ultra-soft, diffused card shadow for white surfaces floating on the
+     ice-blue canvas — purple-tinted instead of flat black for a cleaner,
+     more premium "lift" than the default Tailwind shadow scale. */
+  --shadow-soft: 0 20px 40px -18px rgba(120, 0, 139, 0.16), 0 8px 18px -12px rgba(13, 30, 74, 0.07);
+  --shadow-soft-lg: 0 30px 60px -20px rgba(120, 0, 139, 0.22), 0 14px 28px -14px rgba(13, 30, 74, 0.09);
 }
 
 .dark {
@@ -127,6 +133,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-soft-lg: var(--shadow-soft-lg);
 }
 
 @layer base {
