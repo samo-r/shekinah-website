@@ -1,6 +1,6 @@
-import { HeroSlideshow } from "@/components/shared/HeroSlideshow";
+import { HeroSection } from "@/components/shared/HeroSection";
 import { MediaGalleryClient } from "@/components/media/MediaGalleryClient";
-import { HERO_SLIDES } from "@/lib/constants";
+import { IMGS } from "@/lib/constants";
 import { fetchGalleryImages } from "@/app/actions/gallery";
 
 export const revalidate = 0;
@@ -10,8 +10,8 @@ export default async function MediaPage() {
 
   return (
     <>
-      <HeroSlideshow
-        images={HERO_SLIDES}
+      <HeroSection
+        img={IMGS.heroPrograms}
         title="Life at Shekinah"
         centered
       />

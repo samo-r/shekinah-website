@@ -69,7 +69,7 @@ export default function AboutPage() {
       </section>
 
       {/* Full Director's Statement */}
-      <section id="directors-message" className="bg-background py-24 px-6 lg:px-14 scroll-mt-[96px]">
+      <section id="directors-message" className="bg-background py-24 px-6 lg:px-14 scroll-mt-[72px]">
         <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-16 items-start">
           <div className="md:col-span-3">
             <SectionHead title="Welcome to Shekinah Elementary School" />

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { CldImage } from "next-cloudinary";
-import { BLUE } from "@/lib/constants";
+import { BLUE, CLD_SAFE_SHARPEN } from "@/lib/constants";
 import type { MediaFilter } from "@/lib/data";
 import type { GalleryImage } from "@/app/actions/gallery";
 
@@ -42,7 +42,7 @@ export function MediaGalleryClient({
 
   return (
     <>
-      <div className="bg-white/80 backdrop-blur-md border-b border-border sticky top-[96px] z-40">
+      <div className="bg-white/80 backdrop-blur-md border-b border-border sticky top-[72px] z-40">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-14">
           <div
             className="flex gap-1 overflow-x-auto py-3"
@@ -79,18 +79,21 @@ export function MediaGalleryClient({
             , then refresh.
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2 lg:gap-3">
+          <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
             {shown.map((item) => (
               <div
                 key={item.id}
-                className="relative aspect-square overflow-hidden rounded-md sm:rounded-lg bg-muted"
+                className="break-inside-avoid mb-4 overflow-hidden rounded-md sm:rounded-lg bg-muted"
               >
                 <CldImage
                   src={item.publicId}
                   alt=""
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover"
+                  width={900}
+                  height={1200}
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="w-full h-auto object-contain"
+                  crop="limit"
+                  rawTransformations={CLD_SAFE_SHARPEN}
                 />
               </div>
             ))}

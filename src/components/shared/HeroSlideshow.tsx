@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { CldImage } from "next-cloudinary";
-import { PURPLE } from "@/lib/constants";
+import { PURPLE, CLD_SAFE_SHARPEN } from "@/lib/constants";
 
 interface HeroSlideshowProps {
   images: readonly string[];
@@ -60,6 +60,7 @@ export function HeroSlideshow({
               sizes="100vw"
               priority={index === 0}
               className="object-cover object-center"
+              rawTransformations={CLD_SAFE_SHARPEN}
             />
           </div>
         );

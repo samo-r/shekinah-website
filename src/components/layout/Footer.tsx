@@ -8,8 +8,10 @@ import { PURPLE, BLUE } from "@/lib/constants";
 
 const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Home", href: "/" },
-  { label: "Why Us", href: "/" },
-  { label: "Our Programs", href: "/" },
+  { label: "Why Us", href: "/#why-us" },
+  { label: "Our Programs", href: "/#school-services" },
+  { label: "About Us", href: "/about" },
+  { label: "Director's Message", href: "/about#directors-message" },
   { label: "Media", href: "/media" },
   { label: "Contact Us", href: "/contact" },
 ];
@@ -73,7 +75,7 @@ export function Footer() {
               {[
                 { Icon: MapPin, text: "Mazzi Village, Sissa Ward, Kajjansi" },
                 { Icon: Phone, text: "+256 772 861 931\n+256 740 323 123" },
-                { Icon: Mail, text: "info@shekinahelementary.co.ug" },
+                { Icon: Mail, text: "info@shekinahelementaryschool.com" },
                 { Icon: Clock, text: "Mon – Fri, 8:00 AM – 5:00 PM" },
               ].map(({ Icon, text }, i) => (
                 <div key={i} className="flex items-start gap-3">

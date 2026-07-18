@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: "Shekinah Elementary School",
   description:
     "Nurturing young God-fearing minds, inspiring excellence. Welcome to Shekinah Elementary School.",
+  icons: {
+    icon: [{ url: "/badge.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/badge.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({

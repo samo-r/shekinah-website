@@ -10,9 +10,22 @@ export const BLUE = SKY;
 
 const CLOUD_NAME = "tq1tf1wo";
 
+/** Cloudinary sharpen strength (+20%) */
+export const CLD_SHARPEN = 20;
+
+/**
+ * Cap at 25MP (5000×5000) BEFORE sharpen — required ordering for Cloudinary.
+ * Use with CldImage `rawTransformations`.
+ */
+export const CLD_SAFE_SHARPEN: string[] = [
+  "c_limit,w_5000,h_5000",
+  `e_sharpen:${CLD_SHARPEN}`,
+];
+
 /**
  * Optional helper — build a Cloudinary delivery URL from a public ID.
  * Example: cldUrl("_MG_5392_ml8odr", 1440, 960)
+ * Chain: limit 5000×5000 → target crop → sharpen (unless extras already sharpens).
  */
 export function cldUrl(
   publicId: string,
@@ -20,9 +33,14 @@ export function cldUrl(
   height: number,
   extras = "",
 ) {
-  const base = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-  const transforms = extras ? `${base},${extras}` : base;
-  return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${transforms}/${publicId}`;
+  const limit = "c_limit,w_5000,h_5000";
+  const crop = [ `w_${width}`, `h_${height}`, "c_fill", "q_auto", "f_auto", extras ]
+    .filter(Boolean)
+    .join(",");
+  const hasSharpen = /e_sharpen/.test(extras);
+  const sharpen = hasSharpen ? "" : `e_sharpen:${CLD_SHARPEN}`;
+  const chain = [limit, crop, sharpen].filter(Boolean).join("/");
+  return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${chain}/${publicId}`;
 }
 
 /**
@@ -44,8 +62,8 @@ export function cldUrl(
 export const IMGS = {
   // Heroes
   heroHome: "", //unused by slideshow
-  heroAbout: cldUrl("schoolBlock_vc717g", 1440, 960), // About page hero
-  heroPrograms: cldUrl("_MG_3764_iog7jz", 1440, 960), // Programs/Media page hero
+  heroAbout: cldUrl("_MG_9931_zrq6sl", 1440, 960), // About page hero
+  heroPrograms: cldUrl("_MG_0055_rlsjat", 1440, 960), // Programs/Media page hero
   heroContact: cldUrl("schoolsignage_rgrlyk", 1440, 960), // Contact page hero
 
   // About / campus
@@ -53,30 +71,31 @@ export const IMGS = {
 
   // Program cards + gallery thumbs (also used in src/lib/data.ts)
   studentsTable: cldUrl("_MG_3764_iog7jz", 600, 440), // 600×440
-  boyStudying: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
-  classroom: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
-  campusClock: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
-  swimming: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
+  boyStudying: cldUrl("_MG_0329_rwzszz", 600, 440), // 600×440
+  classroom: cldUrl("_MG_0329_rwzszz", 600, 440), // 600×440
+  campusClock: cldUrl("_MG_9943_rq7qhz", 600, 440), // 600×440
+  swimming: cldUrl("_MG_5373_hrrnsj", 600, 440), // 600×440
   dining: cldUrl("PASTE_CLOUDINARY_URL_HERE", 600, 440), // 600×440
 
   // Director speech portrait (Home welcome teaser + About full statement)
-  directorSpeech: cldUrl("_MG_3905_ayl8no", 900, 1200, "g_face,e_sharpen:100"),
+  directorSpeech: cldUrl("_MG_3905_ayl8no", 900, 1200, "g_face"),
 
   // Admin team portraits (Administrative Team cards)
-  admin1: cldUrl("PASTE_DIRECTOR_TEAM_PUBLIC_ID", 420, 520), // Nsubuga Benny Frank — team card only
+  admin1: cldUrl("IMG-20230903-WA0021_gwxp7z", 420, 520), // Nsubuga Benny Frank — team card only
   admin2: cldUrl("freda_qtyzk8", 420, 520), // Nsubuga Freda Namakula
-  admin3: cldUrl("headteacher_hr4jpp", 420, 520), // Namutebi Rebecca
-  admin4: cldUrl("PASTE_ADMIN4_PUBLIC_ID", 420, 520), // Mukisa Samuel — Operations and Systems Admin
+  admin3: cldUrl("_MG_7876_mfzruh", 420, 520), // Namutebi Rebecca
+  admin4: cldUrl("_MG_9963_drptvb", 420, 520), // Mukisa Samuel — Operations and Systems Admin
 };
 
 /** About page — collective faculty / staff group photo (Cloudinary public ID) */
-export const STAFF_PHOTO_PUBLIC_ID = "PASTE_STAFF_PHOTO_PUBLIC_ID";
+export const STAFF_PHOTO_PUBLIC_ID = "_MG_0041_qvmoxs";
 
 /*Home hero slideshow*/
 export const HERO_SLIDES = [
-  "_MG_5392_ml8odr",
+  "_MG_9931_zrq6sl",
+  "_MG_9934_mwpgww",
   "_MG_7746_naqyki",
-  "_MG_7885_hlsoen",
+  "_MG_0057_lqp6mw",
 ] as const;
 
 /** Contact page — opens Google Maps in a new tab when the map is clicked */

@@ -55,14 +55,14 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 overflow-visible transition-all duration-300 ${
         scrolled ? "shadow-md backdrop-blur-md border-b border-white/50" : "border-b border-transparent"
       }`}
       style={{
         backgroundColor: scrolled ? "rgba(255, 255, 255, 0.82)" : "transparent",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-14 flex items-center justify-between h-[96px]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-14 flex items-center justify-between h-[72px]">
         <Link
           href="/"
           className="flex items-center flex-shrink-0"

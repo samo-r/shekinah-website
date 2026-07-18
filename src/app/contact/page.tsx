@@ -11,7 +11,13 @@ import { sendContactMessage } from "@/app/actions/contact";
 import { IMGS, BLUE, NAVY, SCHOOL_MAPS_URL, SCHOOL_MAP_EMBED_SRC } from "@/lib/constants";
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [pending, startTransition] = useTransition();
@@ -30,8 +36,8 @@ export default function ContactPage() {
       const result = await sendContactMessage(formData);
       if (result.ok) {
         setStatus("success");
-        setFeedback("Thank you! We will get back to you shortly.");
-        setForm({ name: "", email: "", phone: "", message: "" });
+        setFeedback("Thank you! Your message was sent successfully. We will get back to you shortly.");
+        setForm({ name: "", email: "", phone: "", subject: "", message: "" });
       } else {
         setStatus("error");
         setFeedback(result.error);
@@ -61,7 +67,7 @@ export default function ContactPage() {
               {[
                 { Icon: MapPin, label: "Physical Address", value: "Mazzi Village, Sissa Ward, Kajjansi" },
                 { Icon: Phone, label: "Phone Lines", value: "+256 772 861 931  /  +256 740 323 123" },
-                { Icon: Mail, label: "Email Address", value: "info@shekinahelementary.co.ug" },
+                { Icon: Mail, label: "Email Address", value: "info@shekinahelementaryschool.com" },
                 { Icon: Clock, label: "Office Hours", value: "Monday – Friday, 8:00 AM – 5:00 PM" },
               ].map(({ Icon, label, value }) => (
                 <div key={label} className="flex items-start gap-4">
@@ -102,9 +108,10 @@ export default function ContactPage() {
             )}
             <form onSubmit={submit} className="space-y-4">
               {[
-                { name: "name", label: "Full Name", type: "text", placeholder: "Your full name" },
-                { name: "email", label: "Email Address", type: "email", placeholder: "your@email.com" },
-                { name: "phone", label: "Phone Number", type: "text", placeholder: "+256 ..." },
+                { name: "name", label: "Full Name", type: "text", placeholder: "Your full name", required: true },
+                { name: "email", label: "Email Address", type: "email", placeholder: "your@email.com", required: true },
+                { name: "phone", label: "Phone Number", type: "text", placeholder: "+256 ...", required: false },
+                { name: "subject", label: "Subject", type: "text", placeholder: "What is this about?", required: true },
               ].map((inp) => (
                 <div key={inp.name}>
                   <label className="block font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
@@ -115,7 +122,7 @@ export default function ContactPage() {
                     type={inp.type}
                     value={form[inp.name as keyof typeof form]}
                     onChange={change}
-                    required={inp.name !== "phone"}
+                    required={inp.required}
                     placeholder={inp.placeholder}
                     className={fieldCls}
                     disabled={pending}

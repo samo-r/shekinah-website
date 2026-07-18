@@ -1,7 +1,7 @@
 "use client";
 
 import { CldImage } from "next-cloudinary";
-import { STAFF_PHOTO_PUBLIC_ID } from "@/lib/constants";
+import { STAFF_PHOTO_PUBLIC_ID, CLD_SAFE_SHARPEN } from "@/lib/constants";
 
 /** Client boundary — CldImage uses React hooks and cannot render in a Server Component. */
 export function StaffPhoto() {
@@ -15,6 +15,7 @@ export function StaffPhoto() {
         className="object-cover object-center"
         crop="fill"
         gravity="auto"
+        rawTransformations={CLD_SAFE_SHARPEN}
       />
     </div>
   );

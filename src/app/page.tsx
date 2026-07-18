@@ -11,7 +11,7 @@ import { PrimaryBtn } from "@/components/shared/PrimaryBtn";
 import { OutlineBtn } from "@/components/shared/OutlineBtn";
 import { HeroSlideshow } from "@/components/shared/HeroSlideshow";
 import { AdminCard } from "@/components/shared/AdminCard";
-import { IMGS, PURPLE, HERO_SLIDES } from "@/lib/constants";
+import { IMGS, PURPLE, BLUE, HERO_SLIDES } from "@/lib/constants";
 import { PROGRAMS } from "@/lib/data";
 
 export default function HomePage() {
@@ -49,7 +49,7 @@ export default function HomePage() {
       </section>
 
       {/* ③ Why Us — Blue icons, numbered cards */}
-      <section className="bg-muted py-24 px-6 lg:px-14" id="why-us">
+      <section className="bg-muted py-24 px-6 lg:px-14 scroll-mt-[72px]" id="why-us">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 max-w-xl">
             <SectionHead title="Why Choose Shekinah?" />
@@ -148,13 +148,13 @@ export default function HomePage() {
                 key={label}
                 className="flex flex-col items-center text-center py-10 px-5 rounded-2xl border border-white/10 hover:border-[#1BB2E9]/60 hover:bg-white/5 transition-all duration-300 group cursor-default"
               >
-                <div className="w-20 h-20 flex items-center justify-center mb-5 bg-transparent">
+                <div className="w-[7.5rem] h-[7.5rem] flex items-center justify-center mb-5 bg-transparent">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={src}
                     alt=""
                     aria-hidden
-                    className="w-11 h-11 object-contain brightness-0 invert"
+                    className="w-[4.125rem] h-[4.125rem] object-contain brightness-0 invert"
                   />
                 </div>
                 <p className="font-sans font-extrabold text-white text-xl tracking-tight">{label}</p>
@@ -165,7 +165,7 @@ export default function HomePage() {
       </section>
 
       {/* ⑦ School Services */}
-      <section className="bg-background py-24 px-6 lg:px-14">
+      <section id="school-services" className="bg-background py-24 px-6 lg:px-14 scroll-mt-[72px]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-14">
             <h2 className="font-sans font-extrabold text-[#2C3E6B] text-3xl md:text-4xl leading-tight tracking-tight">
@@ -275,9 +275,13 @@ export default function HomePage() {
             Join a diverse, spiritually vibrant community united by Christ to achieve excellence in education. Admissions are now open for the current intake.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <PrimaryBtn href="/contact">
-              Contact Us Today <ArrowRight size={16} />
-            </PrimaryBtn>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-5 py-3 hover:opacity-90 transition-opacity rounded-sm"
+              style={{ backgroundColor: BLUE }}
+            >
+              Contact Us Today <ArrowRight size={15} />
+            </Link>
             <OutlineBtn href="/contact" dark>
               Enroll Now
             </OutlineBtn>
